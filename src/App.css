@@ -1,0 +1,21 @@
+.App {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 1) 0%, rgba(0, 0, 255, 1) 75%);;
+    height: 100vh;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+  padding-top: 200px;
+}
+
+.todoList-task.done {
+    opacity: 0.5;
+    color: mediumslateblue;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+
+}
