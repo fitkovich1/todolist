@@ -4,7 +4,7 @@ const SET_TASK = "TodoList/Reducer/SET_TASK";
 const CHECKED_IS_DONE = "TodoList/Reducer/CHECKED_IS_DONE";
 const ACTIVATE_EDIT_MODE = "TodoList/Reducer/ACTIVATE_EDIT_MODE";
 const DEACTIVATE_EDIT_MODE = "TodoList/Reducer/DEACTIVATE_EDIT_MODE";
-
+const CHANGE_TITLE_TASK = "TodoList/Reducer/CHANGE_TITLE_TASK";
 
 
 const initialState = {
@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TASK:
             let newTask = {
-              id: state.nextTaskId,
+                id: state.nextTaskId,
                 title: state.newText
             };
 
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
                 tasks: [...state.tasks, newTask], nextTaskId: state.nextTaskId + 1,
                 newText: ""
             };
-            case SET_TASK:
+        case SET_TASK:
             return {
                 ...state, newText: action.newText
             };
@@ -45,8 +45,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasks: state.tasks.map(t => {
-                    if(t.id !== action.taskId){
-                        return{
+                    if (t.id !== action.taskId) {
+                        return {
                             ...t
                         }
                     } else {
@@ -56,12 +56,12 @@ const reducer = (state = initialState, action) => {
                         }
                     }
                 })
-        };
+            };
         case ACTIVATE_EDIT_MODE:
-           return {
-               ...state,
+            return {
+                ...state,
                 tasks: state.tasks.map(t => {
-                    if(t.id !== action.taskId){
+                    if (t.id !== action.taskId) {
                         return {...t}
                     } else {
                         return {
@@ -70,12 +70,12 @@ const reducer = (state = initialState, action) => {
                         }
                     }
                 })
-        }
+            };
         case DEACTIVATE_EDIT_MODE:
-           return {
-               ...state,
+            return {
+                ...state,
                 tasks: state.tasks.map(t => {
-                    if(t.id !== action.taskId){
+                    if (t.id !== action.taskId) {
                         return {...t}
                     } else {
                         return {
@@ -84,7 +84,21 @@ const reducer = (state = initialState, action) => {
                         }
                     }
                 })
-        }
+            };
+            case CHANGE_TITLE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.map(t => {
+                    if (t.id !== action.taskId) {
+                        return {...t}
+                    } else {
+                        return {
+                            ...t,
+                            title: action.newTitle
+                        }
+                    }
+                })
+            }
 
     }
     return state
@@ -116,18 +130,25 @@ export const checkedIsDoneAC = (isDone, taskId) => {
         taskId: taskId
     }
 };
-export const activateEditModeAC = (editMode,taskId) => {
+export const activateEditModeAC = (editMode, taskId) => {
     return {
         type: ACTIVATE_EDIT_MODE,
         editMode: editMode,
         taskId: taskId
     }
 };
-export const deactivateEditModeAC = (editMode,taskId) => {
+export const deactivateEditModeAC = (editMode, taskId) => {
     return {
         type: DEACTIVATE_EDIT_MODE,
         editMode: editMode,
         taskId: taskId
+    }
+};
+export  const changeTitleTaskAC = (taskId, newTitle) => {
+    return {
+        type: CHANGE_TITLE_TASK,
+        taskId,
+        newTitle
     }
 };
 

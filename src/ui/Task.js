@@ -1,10 +1,20 @@
 import React from 'react'
 import "../App.css"
 import {connect} from "react-redux";
-import {activateEditModeAC, checkedIsDoneAC, deactivateEditModeAC, deleteTaskAC} from "../redux/reducer";
+import {
+    activateEditModeAC,
+    changeTitleTaskAC,
+    checkedIsDoneAC,
+    deactivateEditModeAC,
+    deleteTaskAC
+} from "../redux/reducer";
 
 
 const Task = (props) => {
+
+    let changeTitleTask = (e) => {
+        props.changeTitleTask(props.task.id, e.currentTarget.value);
+    };
 
     let deleteTask = () => {
         props.deleteTask(props.task.id);
@@ -17,6 +27,8 @@ const Task = (props) => {
     let activateEditMode = () => {
         props.activateEditMode(!props.task.editMode, props.task.id)
     };
+
+
     let deactivateEditMode = () => {
         props.deactivateEditMode(!props.task.editMode, props.task.id)
     };
@@ -27,7 +39,7 @@ const Task = (props) => {
             <li className={classForLi}>
                 <input type='checkbox' checked={props.task.isDone} onClick={changeIsDone}/>
                 {props.task.editMode ?
-                    <input value={props.task.title} onBlur={deactivateEditMode} autoFocus={true}/>
+                    <input value={props.task.title} onBlur={deactivateEditMode} autoFocus={true} onChange={changeTitleTask}/>
                     :
                     <span onClick={activateEditMode}>{props.task.id} : {props.task.title}</span>
                 }
@@ -52,10 +64,14 @@ const mapDispatchToProps = (dispatch) => {
          const action = activateEditModeAC(editMode, taskId);
          dispatch(action)
         },
-        deactivateEditMode: (editMode,taskId) => {
-         const action = deactivateEditModeAC(editMode, taskId);
+        deactivateEditMode: (editMode,taskId,newTaskText) => {
+         const action = deactivateEditModeAC(editMode, taskId,newTaskText);
          dispatch(action)
-        }
+        },
+        changeTitleTask: (taskId, newTitle) => {
+            const action = changeTitleTaskAC(taskId, newTitle);
+            dispatch(action)
+        },
     }
 };
 
